@@ -6,7 +6,7 @@ respuesta = false;
 if n == m
     otraMatriz = matriz
     respuesta = true;
-    for i=1:n-1
+    for i=1:n
         [n2,m2] = size(otraMatriz);
         esDeterminante = determinante(otraMatriz)
         if esDeterminante <= 0
@@ -14,7 +14,7 @@ if n == m
             break;
         end
         otraMatriz(n2,:) = [];
-        otraMatriz(:,m2) = []
+        otraMatriz(:,m2) = [];
     end
 end
 end
