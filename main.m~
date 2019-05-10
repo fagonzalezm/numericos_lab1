@@ -1,0 +1,107 @@
+% % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % ACTIVIDAD 1 % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % %
+
+% %Preparación del método
+% syms f(x,y,z) g(x,y,z) h(x,y,z)
+% f(x,y,z) = x^2 + y -37;
+% g(x,y,z) = x - y^2 - 5;
+% h(x,y,z) = x + y + z -3;
+% x0 = {0;0;0};
+% variables = [x y z];
+% 
+% %Método usando la función jacobian de matlab
+% F1 = [f g h];
+% tic
+% [raices1, errores1, iteraciones1] = nr(F1, x0);
+% tNr1 = toc;
+% 
+% %Método usando jacobiano implementado
+% F2 = {f g h};
+% tic
+% [raices2, errores2, iteraciones2] = nr2(F2, x0);
+% tNr2 = toc;
+% 
+% %Gráficos
+% graficarNRmult(raices1,'NR con jacobian de Matlab');
+% graficarNRmult(raices2,'NR sin jacobian implementado');
+% erroresNRmult(errores1,errores2);
+% 
+% cd 'data'
+% save raicesNRmult1.dat raices1 -ASCII -TABS;
+% save raicesNRmult2.dat raices2 -ASCII -TABS;
+% save erroresNRmult1.dat errores1 -ASCII -TABS;
+% save erroresNRmult2.dat errores2 -ASCII -TABS;
+% save iteracionesNRmult1.dat iteraciones1 -ASCII -TABS;
+% save iteracionesNRmult2.dat iteraciones2 -ASCII -TABS;
+% save tiempoNRmult1.dat tNr1 -ASCII -TABS;
+% save tiempoNRmult2.dat tNr2 -ASCII -TABS;
+% 
+% cd '../'
+
+
+% % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % ACTIVIDAD 2 % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % %
+
+% % %Ejemplo
+
+A = [3 -1 -1; -1 3 1; 2 1 4];
+b = [1; 3; 7];
+
+%Métodos iterativos
+tol = 0;
+tic,
+[xGJ, eGJ] = gaussJacobi(A,b,tol);
+tiempoGJ = toc;
+tic,
+[xGS, eGS] = gaussSeidel(A,b,tol);
+tiempoGS = toc;
+
+%Métodos directos
+tic,
+[xD] = doolittle(A,b);
+tiempoD = toc;
+tic,
+[xCh] = cholesky(A,b);
+tiempoCh = toc;
+tic
+[xQR] = QR(A,b);
+tiempoQR = toc;
+tic,
+[xG] = givens(A,b);
+tiempoG = toc;
+tic,
+[xH] = householder(A,b);
+tiempoH = toc;
+
+%Gráficos
+graficarSEit(xGJ,xGS,'Método iterativo');
+graficarSE(xD,xCh,xQR,xG,xH, 'Método directo');
+graficarErroresIt(eGJ,eGS, 'Error métodos iterativos');
+
+cd 'data'
+save sGJ289.dat sGJ289 -ASCII -TABS;
+save eGJ289.dat eGJ289 -ASCII -TABS;
+save tiempoGJ289.dat tiempoGJ289 -ASCII -TABS;
+
+save sGS289.dat sGS289 -ASCII -TABS;
+save eGS289.dat eGS289 -ASCII -TABS;
+save tiempoGS289.dat tiempoGS289 -ASCII -TABS;
+
+save xD289.dat
+save tiempoD289.dat
+
+save xCh289.dat
+save tiempoCh289.dat
+
+save xQR289.dat
+save tiempoQR289.dat
+
+save xG289.dat
+save tiempoG289.dat
+
+save xH289.dat
+save tiempoH289.dat
+
+
